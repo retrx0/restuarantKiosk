@@ -1,0 +1,179 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 9 Jun 2020, 23:59:52
+    Author     : ABDULRAHMAN ILLO
+*/
+
+
+.button{
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0.5,0,0);
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+.button .label{
+    -fx-font-size: 20px;
+    -fx-alignment: CENTER;
+}
+.button:focused,.button:selected{
+    
+}
+
+.first-page-button{
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20,0.4,0,0);
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-radius: 50px;
+}
+.first-page-button > VBox > .label{
+    -fx-font-size: 25px;
+    -fx-alignment: CENTER;
+    -fx-text-fill: #b20000;
+}
+.first-page-button:hover{
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0.2, 0,0);
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+    -fx-scale-z: 1.01;
+    -fx-background-color: white; 
+    -fx-background-radius: 5;
+}
+
+.side-menu-btn{
+    -fx-background-color: white;
+}
+.side-menu-btn .label{
+    -fx-font-size: 20px;
+    -fx-alignment: CENTER;
+}
+.side-menu-btn:focused,.side-menu-btn:selected{
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.3, 0,0);
+    -fx-background-radius: 5;
+    /*-fx-scale-x: 1.005;
+    -fx-scale-y: 1.005;
+    -fx-scale-z: 1.005;*/
+    
+}
+
+.food-button{
+     -fx-background-color: #FFF;
+     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 10,0.2,0,0);
+    -fx-background-radius: 5;
+}
+.food-button > HBox > .button{
+    -fx-background-color: #b20000;
+    -fx-text-fill: #FFF;
+    -fx-background-radius: 5;
+}
+.food-button .label{
+    -fx-font-size: 20px;
+    -fx-alignment: CENTER;
+    -fx-text-fill: #b20000;
+}
+
+.pane{
+    -fx-background-color: white;
+}
+.pane-button{
+    -fx-background-color: #b20000;
+    -fx-text-fill: #FFF;
+}
+
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track{
+    -fx-background-color: #FFF;
+    -fx-border-color: #FFF;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+.scroll-bar:horizontal .increment-button , .scroll-bar:horizontal .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 0.0 10.0 0.0;
+}
+.scroll-bar:vertical .increment-button , .scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+}
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.15em 0.0;
+}
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.0 0.15em;
+}
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color : whitesmoke;
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+.scroll-bar:horizontal .thumb:hover, .scroll-bar:vertical .thumb:hover {
+    -fx-background-color :derive(whitesmoke,20.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+
+.dialog-root{
+    -fx-background-color: white;
+    -fx-border-radius:10px; 
+    -fx-background-radius: 10;
+    -fx-padding: 40;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 50,0.3,0,0);
+    -fx-background-insets: 40;
+    /*-fx-border-radius: 5px; -fx-border-width: 0.3px;-fx-border-color: #b20000;*/
+}
+.dialog-root  .button{
+    -fx-background-color: #b20000;
+    -fx-border-radius:5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20,0.2,0,0);
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+.dialog-root  .label{
+    -fx-font-size: 20px;
+    -fx-text-fill: #b20000;
+}
+
+.cart-item-view{
+    -fx-background-color: #FFF;
+    -fx-border-radius: 3px; 
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 20,0.4,0,0);
+    -fx-background-radius: 3;
+}
+.cart-item-view > HBox{
+    
+}
+.cart-item-view .button{
+    -fx-background-color: #b20000;
+    -fx-border-radius:5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20,0.2,0,0);
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+.cart-item-view .label{
+    -fx-font-size: 20px;
+    -fx-text-fill: #b20000;
+}
+
+.drop-down-view{
+    
+}
+.drop-down-view .label{
+    -fx-font-size: 20px;
+    -fx-text-fill: #b20000;
+}
+.drop-down-view .button{
+    -fx-background-color: #b20000;
+    -fx-border-radius:8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20,0.2,0,0);
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
