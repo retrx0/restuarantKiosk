@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="topAncPane" prefHeight="647.0" prefWidth="764.0" stylesheets="@../styles/style-normal.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.view.FXMLSceneController">
+<AnchorPane id="AnchorPane" fx:id="topAncPane" prefHeight="647.0" prefWidth="781.0" stylesheets="@../styles/style-normal.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.view.FXMLSceneController">
    <children>
       <StackPane fx:id="upperStack" prefHeight="626.0" prefWidth="698.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,20 +22,37 @@
             </AnchorPane>
             <AnchorPane fx:id="menuPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: whitesmoke;">
                <children>
-                  <AnchorPane prefHeight="626.0" prefWidth="121.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="647.0" prefWidth="148.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <ScrollPane fitToWidth="true" layoutY="113.0" prefHeight="626.0" prefWidth="140.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <VBox fx:id="sideMenuVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="624.0" prefWidth="201.0" spacing="5.0" styleClass="pane">
+                              <VBox fx:id="sideMenuVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="624.0" prefWidth="201.0" spacing="10.0" styleClass="pane">
                                  <padding>
-                                    <Insets left="10.0" top="10.0" />
+                                    <Insets left="10.0" top="20.0" />
                                  </padding></VBox>
                            </content>
                         </ScrollPane>
                      </children>
                   </AnchorPane>
-                  <StackPane fx:id="menuStack" layoutX="127.0" layoutY="13.0" prefHeight="647.0" prefWidth="637.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <StackPane fx:id="menuStack" layoutX="149.0" layoutY="13.0" prefHeight="647.0" prefWidth="615.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
+                        <AnchorPane fx:id="homePane" prefHeight="533.0" prefWidth="644.0" styleClass="pane">
+                           <children>
+                              <AnchorPane layoutX="-6.0" layoutY="62.0" prefHeight="453.0" prefWidth="644.0" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <ScrollPane fitToWidth="true" prefHeight="297.0" prefWidth="644.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <content>
+                                          <VBox fx:id="menuVbox" alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="516.0" prefWidth="623.0" spacing="3.0" styleClass="pane">
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
                         <AnchorPane fx:id="orderPane" prefHeight="647.0" prefWidth="641.0" styleClass="pane">
                            <children>
                               <Label alignment="CENTER" layoutX="229.0" layoutY="18.0" prefHeight="51.0" prefWidth="187.0" text="Order Details" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0">
@@ -64,31 +82,27 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="homePane" prefHeight="533.0" prefWidth="644.0" styleClass="pane">
+                        <AnchorPane fx:id="masonPane" prefHeight="467.0" prefWidth="632.0" styleClass="pane">
                            <children>
-                              <Button fx:id="payButton" layoutX="401.0" layoutY="541.0" mnemonicParsing="false" onAction="#doneButtonOnAction" prefHeight="51.0" prefWidth="162.0" styleClass="pane-button" text="Done" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="75.0">
+                              <ScrollPane fx:id="masonScrollpane" fitToWidth="true" prefHeight="499.0" prefWidth="597.0" styleClass="pane" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <JFXMasonryPane fx:id="menuMasonPane" HSpacing="10.0" VSpacing="10.0" cellHeight="300.0" cellWidth="285.0" limitColumn="4" maxHeight="1.7976931348623157E308" prefHeight="578.0" prefWidth="620.0" styleClass="pane">
+                                       <padding>
+                                          <Insets bottom="10.0" left="5.0" right="5.0" top="20.0" />
+                                       </padding>
+                                    </JFXMasonryPane>
+                                 </content>
+                              </ScrollPane>
+                              <Button fx:id="payButton" mnemonicParsing="false" onAction="#doneButtonOnAction" prefHeight="51.0" prefWidth="162.0" styleClass="pane-button" text="Done" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="75.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="cancelButton" layoutX="77.0" layoutY="541.0" mnemonicParsing="false" onAction="#cancelOrderButton" prefHeight="51.0" prefWidth="162.0" styleClass="pane-button" text="Cancel Order" AnchorPane.bottomAnchor="55.0">
+                              <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelOrderButton" prefHeight="51.0" prefWidth="162.0" styleClass="pane-button" text="Cancel Order" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="30.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Button>
-                              <AnchorPane layoutX="-6.0" layoutY="62.0" prefHeight="453.0" prefWidth="644.0" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <ScrollPane fitToWidth="true" prefHeight="297.0" prefWidth="644.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <content>
-                                          <VBox fx:id="menuVbox" alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="516.0" prefWidth="623.0" spacing="3.0" styleClass="pane">
-                                             <padding>
-                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                             </padding>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
-                                 </children>
-                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </children>

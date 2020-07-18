@@ -5,6 +5,7 @@
  */
 package hu.unideb.inf.model;
 
+import com.jfoenix.controls.JFXDialog;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -52,7 +53,6 @@ public class FoodButton extends Button{
     FoodItem fooditem = new FoodItem();
     ItemOrderDetails itemorder = new ItemOrderDetails();
     Group group;
-    VBox vBox;
     ImageView image;
     Label label;
     Label label2;
@@ -63,24 +63,35 @@ public class FoodButton extends Button{
     }
     
     public FoodButton(String cat,String imagepath, String name, float price) {
-            this.fooditem.setImage(new ImageView(imagepath));
+            this.imagePath = imagepath;
             this.fooditem.setPrice(price);
             this.fooditem.setName(name);
             this.fooditem.setCategory(cat);
             initialize();
+            this.fooditem.setImage(image);
     }
     
     private void initialize() {
         group = new Group();
-        vBox = new VBox();
+        
+        VBox vBox = new VBox();
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        image = new ImageView(imagePath);
+        image.setPreserveRatio(true);
+        //image.setFitHeight(300);
+        image.setFitWidth(250);
+        image.setSmooth(true);
         
         label = new Label(this.fooditem.getName());
+        label.setAlignment(Pos.CENTER);
+        label.setWrapText(true);
         label2 = new Label(""+this.fooditem.getPrice());
-
-        label.setMaxWidth(Long.MAX_VALUE);
-        VBox.setVgrow(label, Priority.ALWAYS);
-        vBox.getChildren().addAll(label, this.fooditem.getImage(), label2);
+        
+        //label.setMaxWidth(Long.MAX_VALUE);
+        //VBox.setVgrow(label, Priority.ALWAYS);
+        vBox.getChildren().addAll(label, image, label2);
+        vBox.setAlignment(Pos.CENTER);
+        
         this.setGraphic(vBox);
         this.getStylesheets().clear();
         this.getStylesheets().add("/styles/style-normal.css");
