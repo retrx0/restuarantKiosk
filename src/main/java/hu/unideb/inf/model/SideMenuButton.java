@@ -5,6 +5,7 @@
  */
 package hu.unideb.inf.model;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXScrollPane;
 import java.net.URL;
@@ -80,16 +81,14 @@ public class SideMenuButton extends Button{
         Label label = new Label(this.buttonName);
         label.setAlignment(Pos.CENTER);
         label.setWrapText(true);
-        System.out.println(label.getWidth());
         //make the button grow if you want the right icon to always be on the right of the button :
         //label.setMaxWidth(Long.MAX_VALUE);
         //VBox.setVgrow(label, Priority.ALWAYS);
         vbx.getChildren().addAll(image,label);
         
         vbx.setSpacing(10);
-        vbx.setPrefSize(50, 50);
         vbx.setAlignment(Pos.CENTER);
-        vbx.setPadding(new Insets(20, 0, 20, 0));
+        vbx.setPadding(new Insets(10, 0, 10, 0));
         
         this.setGraphic(vbx);
         this.getStylesheets().clear();

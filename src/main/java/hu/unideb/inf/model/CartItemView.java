@@ -5,11 +5,17 @@
  */
 package hu.unideb.inf.model;
 
+import com.jfoenix.controls.JFXButton;
 import hu.unideb.inf.view.FXMLSceneController;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,10 +34,12 @@ public class CartItemView extends HBox{
     FoodItem foodItem;
     ItemOrderDetails itemOrderDetails;
     float totalPrice;
-    static public List<FoodItem> cartItemList = new ArrayList();
+    static public ObservableList<FoodItem> cartItemList = FXCollections.observableArrayList();
     OrderDetails orderDetails = new OrderDetails();
     
-    Button deleteButton;
+    Label cartTotalLabel;
+    
+    JFXButton deleteButton;
     
     public CartItemView() {
         init();
@@ -39,6 +47,12 @@ public class CartItemView extends HBox{
 
     public CartItemView(FoodItem foodItem) {
         this.foodItem = foodItem;
+        init();
+    }
+    
+    public CartItemView(FoodItem foodItem,Label ct) {
+        this.foodItem = foodItem;
+        this.cartTotalLabel = ct;
         init();
     }
     
@@ -50,9 +64,9 @@ public class CartItemView extends HBox{
         Label totalPriceLabel = new Label(""+totalPrice);
         Label nameLabel = new Label(this.foodItem.getName());
         Label itemCount = new Label("x"+this.foodItem.getItemOrderDetails().getItemCount());
-        deleteButton = new Button("Remove");
-        Button plusBtn = new Button("+");
-        Button minusBtn =  new Button("-");
+        deleteButton = new JFXButton("Remove");
+        JFXButton plusBtn = new JFXButton("+");
+        JFXButton minusBtn =  new JFXButton("-");
         
         deleteButton.setPrefSize(80, 40);
         plusBtn.setPrefSize(40, 40);
@@ -84,12 +98,14 @@ public class CartItemView extends HBox{
         df.setRoundingMode(RoundingMode.UP);
         
         totalPriceLabel.textProperty().bind(itemOrderDetails.getItemTotalProperty(this.foodItem));
+        
         plusBtn.setOnAction((t) -> {
             int c = this.foodItem.getItemOrderDetails().getItemCount();
             c++;
             this.foodItem.getItemOrderDetails().setItemCount(c);
             itemCount.setText("x"+c);
             itemOrderDetails.getItemTotalProperty(this.foodItem);
+            cartTotalLabel.textProperty().bind(orderDetails.getCartTotal());
         });
         
         minusBtn.setOnAction((t) -> {
@@ -99,8 +115,8 @@ public class CartItemView extends HBox{
                 this.foodItem.getItemOrderDetails().setItemCount(c);
                 itemCount.setText("x"+c);
                 itemOrderDetails.getItemTotalProperty(this.foodItem);
-            }
-            
+                cartTotalLabel.textProperty().bind(orderDetails.getCartTotal());
+            }   
         });
         
     }
@@ -111,6 +127,7 @@ public class CartItemView extends HBox{
             f.cartVbox.getChildren().remove(this);
             CartItemView.cartItemList.remove(this.foodItem);
             this.foodItem.setCartTotalLabel();
+            cartTotalLabel.textProperty().bind(orderDetails.getCartTotal());
             OrderDetails o = new OrderDetails();
             System.out.println(o.getCartTotal().get());
         });
@@ -131,5 +148,10 @@ public class CartItemView extends HBox{
     public void setItemOrderDetails(ItemOrderDetails itemOrderDetails) {
         this.itemOrderDetails = itemOrderDetails;
     }
-        
+
+    public void setCartTotalLabel(Label cartTotalLabel) {
+        this.cartTotalLabel = cartTotalLabel;
+//        cartTotalLabel.textProperty().bind(orderDetails.getCartTotal());
+    }
+    
 }

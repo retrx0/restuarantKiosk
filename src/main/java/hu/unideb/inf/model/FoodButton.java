@@ -5,7 +5,11 @@
  */
 package hu.unideb.inf.model;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -36,6 +40,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -54,10 +61,8 @@ public class FoodButton extends Button{
     ItemOrderDetails itemorder = new ItemOrderDetails();
     Group group;
     ImageView image;
-    Label label;
-    Label label2;
     
-    Button addButton;
+    JFXButton addButton;
 
     public FoodButton() {
     }
@@ -72,9 +77,9 @@ public class FoodButton extends Button{
     }
     
     private void initialize() {
-        group = new Group();
+        //group = new Group();
         
-        VBox vBox = new VBox();
+       
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         image = new ImageView(imagePath);
         image.setPreserveRatio(true);
@@ -82,21 +87,23 @@ public class FoodButton extends Button{
         image.setFitWidth(250);
         image.setSmooth(true);
         
-        label = new Label(this.fooditem.getName());
-        label.setAlignment(Pos.CENTER);
-        label.setWrapText(true);
-        label2 = new Label(""+this.fooditem.getPrice());
+        Label label = new Label(this.fooditem.getName());
         
+        Label label2 = new Label(""+this.fooditem.getPrice());
+        
+         VBox vBox = new VBox();
         //label.setMaxWidth(Long.MAX_VALUE);
         //VBox.setVgrow(label, Priority.ALWAYS);
-        vBox.getChildren().addAll(label, image, label2);
         vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(label, image, label2);
         
         this.setGraphic(vBox);
         this.getStylesheets().clear();
         this.getStylesheets().add("/styles/style-normal.css");
+        this.getStyleClass().clear();
+        this.getStyleClass().add("food-button");
         this.setPrefSize(130, 100);
-        group.getChildren().add(this);
+        //group.getChildren().add(this);
         
         this.setOnAction((ActionEvent t) -> {
             Parent rootPane = this.getScene().getRoot();
@@ -127,10 +134,10 @@ public class FoodButton extends Button{
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initStyle(StageStyle.TRANSPARENT);
         
-        addButton = new Button("Add +");
-        Button plusBtn = new Button("+");
-        Button minusBtn = new Button("-");
-        Button cancelButton = new Button("Cancel");
+        addButton = new JFXButton("Add +");
+        JFXButton plusBtn = new JFXButton("+");
+        JFXButton minusBtn = new JFXButton("-");
+        JFXButton cancelButton = new JFXButton("Cancel");
         Label itemCountlabel = new Label();
         Label headerText = new Label();
         
@@ -141,6 +148,8 @@ public class FoodButton extends Button{
         
         itemCountlabel.setStyle("-fx-font-size: 25px");
         headerText.setStyle("-fx-font-size: 25px");
+        headerText.setWrapText(true);
+        headerText.setTextAlignment(TextAlignment.CENTER);
         
         plusBtn.setOnAction(evt -> {
             int c =this.fooditem.getItemOrderDetails().getItemCount();

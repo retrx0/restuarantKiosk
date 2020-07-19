@@ -8,11 +8,17 @@ package hu.unideb.inf.model;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
+import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableStringValue;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
@@ -23,7 +29,7 @@ public class OrderDetails {
     
     //float cartTotal;
     StringProperty cartTotal = new SimpleStringProperty();
-    List<FoodItem> cartItemList = CartItemView.cartItemList;
+    ObservableList<FoodItem> cartItemList = CartItemView.cartItemList;
     PendingOrder.OrderType orderType;
 
     public OrderDetails() {
@@ -43,6 +49,12 @@ public class OrderDetails {
 
     public int getCartSize(){
         return cartItemList.size();
+    }
+    
+    public void getCartSizeForButton(Button l){
+        StringProperty csp = new SimpleStringProperty("Done("+cartItemList.size()+")");
+        csp.set("Done("+cartItemList.size()+")");
+        l.textProperty().bind(csp);
     }
     
     public StringProperty getCartTotal() {

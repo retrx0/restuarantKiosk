@@ -6,12 +6,14 @@
 package hu.unideb.inf.view;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXScrollPane;
 import hu.unideb.inf.effects.FlashTransition;
 import hu.unideb.inf.model.CartItemView;
 import hu.unideb.inf.model.DAO;
 import hu.unideb.inf.model.FIrstPageButton;
+import hu.unideb.inf.model.FoodItem;
 import hu.unideb.inf.model.JPA;
 import hu.unideb.inf.model.OrderDetails;
 import hu.unideb.inf.model.SideMenuButton;
@@ -32,6 +34,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -224,6 +229,15 @@ public class FXMLSceneController implements Initializable {
         ls.get(0).fire();
         ls.get(0).requestFocus();
 
+        OrderDetails o = new OrderDetails();
+        
+        CartItemView.cartItemList.addListener((ListChangeListener.Change<? extends FoodItem> change) -> {
+            while(change.next()){
+                if(change.wasUpdated())
+                     totalLabel.textProperty().bind(o.getCartTotal());
+            }
+            o.getCartSizeForButton(payButton);
+        });
     }
 
     void cancelOrder() {
@@ -244,18 +258,18 @@ public class FXMLSceneController implements Initializable {
         OrderDetails o = new OrderDetails();
         cartVbox.getChildren().clear();
         for (int i = 0; i < CartItemView.cartItemList.size(); i++) {
-            civ1 = new CartItemView(CartItemView.cartItemList.get(i));
+            civ1 = new CartItemView(CartItemView.cartItemList.get(i),totalLabel);
             cartVbox.getChildren().add(civ1);
             civ1.deleteCartItem(thisController);
         }
         totalLabel.textProperty().bind(o.getCartTotal());
     }
 
-    private Stage createPayDialog(Window owner) {
-        Stage stage = new Stage();
-        stage.initOwner(owner);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initStyle(StageStyle.TRANSPARENT);
+    private void createPayDialog() {
+//        Stage stage = new Stage();
+//        stage.initOwner(owner);
+//        stage.initModality(Modality.WINDOW_MODAL);
+//        stage.initStyle(StageStyle.TRANSPARENT);
 
         ImageView im = new ImageView("/img/creditcard.png");
         im.setFitHeight(100);
@@ -275,7 +289,7 @@ public class FXMLSceneController implements Initializable {
         creditcard.setStyle("-fx-background-color: white");
         Button cash = new Button("", v2);
         cash.setStyle("-fx-background-color: white");
-        Button cancel = new Button("Cancel");
+        JFXButton cancel = new JFXButton("Cancel");
 
         Label headerText = new Label("Select Payment Method");
 
@@ -284,56 +298,77 @@ public class FXMLSceneController implements Initializable {
         cash.setPrefSize(130, 100);
         headerText.setStyle("-fx-font-size: 25px");
 
-        creditcard.setOnAction(evt -> {
-            stage.hide();
-            //doFadeIn(upperStack, firstPage);
-        });
-        cash.setOnAction(evt -> {
-            stage.hide();
-        });
-
-        cancel.setOnAction((t) -> {
-            stage.hide();
-        });
-
         HBox topHbox = new HBox(20, creditcard, cash);
         topHbox.setAlignment(Pos.CENTER);
 
-        VBox dialogRootVbox = new VBox(20, headerText, topHbox, cancel);
+        VBox dialogRoot = new VBox(20, headerText, topHbox, cancel);
+        dialogRoot.setPrefSize(380, 400);
+        dialogRoot.setAlignment(Pos.CENTER);
+        dialogRoot.getStylesheets().clear();
+        dialogRoot.getStylesheets().add("/styles/style-normal.css");
+        dialogRoot.getStyleClass().clear();
+        dialogRoot.getStyleClass().add("dialog-root");
+        
+        JFXDialog d = new JFXDialog(upperStack, dialogRoot, JFXDialog.DialogTransition.CENTER);
+        
+        creditcard.setOnAction(evt -> {
+            d.close();
+//            stage.hide();
+            //doFadeIn(upperStack, firstPage);
+        });
+        cash.setOnAction(evt -> {
+            d.close();
+//            stage.hide();
+        });
 
-        dialogRootVbox.setAlignment(Pos.CENTER);
-        dialogRootVbox.getStylesheets().clear();
-        dialogRootVbox.getStylesheets().add("/styles/style-normal.css");
-        dialogRootVbox.getStyleClass().clear();
-        dialogRootVbox.getStyleClass().add("dialog-root");
-        final Scene scene = new Scene(dialogRootVbox, 550, 400);
-        stage.setScene(scene);
-        scene.setFill(Color.TRANSPARENT);
-        return stage;
-    }
-
-    @FXML
-    void payButtonOnAction() {
+        cancel.setOnAction((t) -> {
+            d.close();
+//            stage.hide();
+        });
+        
         Parent rootPane = topAncPane.getScene().getRoot();
         Effect previousEffect = rootPane.getEffect();
         final BoxBlur blur = new BoxBlur(0, 0, 5);
         blur.setInput(previousEffect);
         rootPane.setEffect(blur);
-
-        Stage stage = createPayDialog(topAncPane.getScene().getWindow());
-        rootPane.setOnMouseClicked((MouseEvent t1) -> {
-            stage.hide();
+        
+        d.setOnDialogClosed((t) -> {
+             rootPane.setEffect(previousEffect);
         });
-        stage.setOnHidden(e -> rootPane.setEffect(previousEffect));
+        
+        d.show();
+//        final Scene scene = new Scene(dialogRootVbox, 550, 400);
+//        stage.setScene(scene);
+//        scene.setFill(Color.TRANSPARENT);
+//        return stage;
+    }
 
-        stage.getScene().getRoot().setOpacity(1);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300),
-                new KeyValue(blur.widthProperty(), 10),
-                new KeyValue(blur.heightProperty(), 10),
-                new KeyValue(stage.getScene().getRoot().opacityProperty(), 1)
-        ));
-        timeline.play();
-        stage.show();
+    @FXML
+    void payButtonOnAction() {
+//        Parent rootPane = topAncPane.getScene().getRoot();
+//        Effect previousEffect = rootPane.getEffect();
+//        final BoxBlur blur = new BoxBlur(0, 0, 5);
+//        blur.setInput(previousEffect);
+//        rootPane.setEffect(blur);
+        
+        
+        createPayDialog();
+        
+        
+//        Stage stage = createPayDialog(topAncPane.getScene().getWindow());
+//        rootPane.setOnMouseClicked((MouseEvent t1) -> {
+//            stage.hide();
+//        });
+//        stage.setOnHidden(e -> rootPane.setEffect(previousEffect));
+
+//        stage.getScene().getRoot().setOpacity(1);
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300),
+//                new KeyValue(blur.widthProperty(), 10),
+//                new KeyValue(blur.heightProperty(), 10),
+//                new KeyValue(stage.getScene().getRoot().opacityProperty(), 1)
+//        ));
+//        timeline.play();
+//        stage.show();
     }
 
     private Stage createCancelDialog(Window owner) {
@@ -342,8 +377,8 @@ public class FXMLSceneController implements Initializable {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initStyle(StageStyle.TRANSPARENT);
 
-        Button cancel = new Button("Cancel");
-        Button confirm = new Button("Confirm");
+        JFXButton cancel = new JFXButton("Cancel");
+        JFXButton confirm = new JFXButton("Confirm");
         Label headerText = new Label("Confirm Order Cancelation");
 
         cancel.setPrefSize(100, 50);
@@ -417,7 +452,6 @@ public class FXMLSceneController implements Initializable {
 //       
 //        JFXScrollPane.smoothScrolling((ScrollPane) sp.getChildren().get(0));
 //        
-
         
         thisController = this;
         showStack(upperStack, firstPage);

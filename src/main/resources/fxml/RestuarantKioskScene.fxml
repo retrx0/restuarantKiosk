@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -60,7 +60,6 @@
                                     <Font size="25.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="23.0" layoutY="26.0" mnemonicParsing="false" onAction="#backButtonPressed" prefHeight="35.0" prefWidth="65.0" styleClass="pane-button" text="Back" />
                               <ScrollPane fitToWidth="true" layoutX="30.0" layoutY="110.0" prefHeight="407.0" prefWidth="444.0" styleClass="pane" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="110.0">
                                  <content>
                                     <VBox fx:id="cartVbox" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="383.0" prefWidth="499.0" spacing="5.0">
@@ -70,16 +69,13 @@
                                     </VBox>
                                  </content>
                               </ScrollPane>
-                              <Button layoutX="411.0" layoutY="557.0" mnemonicParsing="false" onAction="#payButtonOnAction" prefHeight="51.0" prefWidth="162.0" styleClass="pane-button" text="Pay" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="70.0">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Button>
                               <Label fx:id="totalLabel" layoutX="42.0" layoutY="549.0" prefHeight="65.0" prefWidth="199.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </Label>
+                              <JFXButton layoutX="14.0" layoutY="14.0" onAction="#backButtonPressed" prefHeight="29.0" prefWidth="74.0" text="Back" AnchorPane.topAnchor="15.0" />
+                              <JFXButton layoutX="434.0" layoutY="550.0" onAction="#payButtonOnAction" prefHeight="57.0" prefWidth="130.0" text="Pay" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="70.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="masonPane" prefHeight="467.0" prefWidth="632.0" styleClass="pane">
@@ -93,16 +89,8 @@
                                     </JFXMasonryPane>
                                  </content>
                               </ScrollPane>
-                              <Button fx:id="payButton" mnemonicParsing="false" onAction="#doneButtonOnAction" prefHeight="51.0" prefWidth="162.0" styleClass="pane-button" text="Done" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="75.0">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelOrderButton" prefHeight="51.0" prefWidth="162.0" styleClass="pane-button" text="Cancel Order" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="30.0">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Button>
+                              <JFXButton fx:id="cancelButton" layoutX="30.0" layoutY="541.0" onAction="#cancelOrderButton" prefHeight="51.0" prefWidth="162.0" text="Cancel Order" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="35.0" />
+                              <JFXButton fx:id="payButton" layoutX="395.0" layoutY="541.0" onAction="#doneButtonOnAction" prefHeight="51.0" prefWidth="162.0" text="Done" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="75.0" />
                            </children>
                         </AnchorPane>
                      </children>
