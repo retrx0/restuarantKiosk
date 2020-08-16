@@ -31,6 +31,9 @@ and open the template in the editor.
      -jfx-disable-visual-focus: false;
 }
 
+.first-page{
+    
+}
 .first-page-button{
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.13), 20,0.4,0,15);
     -fx-background-color: white;
@@ -58,7 +61,6 @@ and open the template in the editor.
 }
 .side-menu-btn .label{
     -fx-font-size: 18px;
-    -fx-alignment: CENTER;
 }
 .side-menu-btn:focused,.side-menu-btn:selected{
     -fx-background-color: white;
@@ -201,9 +203,9 @@ and open the template in the editor.
 .dialog-root{
     -fx-background-color: white;
     /*-fx-border-radius:10px;*/ 
-    /*-fx-background-radius: 10;*/
+    -fx-background-radius: 5px;
     /*-fx-padding: 40;*/
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 50,0.3,0,0);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 50,0.3,0,0);
     /*-fx-background-insets: 40;*/
     /*-fx-border-radius: 5px; -fx-border-width: 0.3px;-fx-border-color: #b20000;*/
 }

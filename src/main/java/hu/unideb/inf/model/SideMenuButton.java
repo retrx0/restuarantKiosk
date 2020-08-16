@@ -5,24 +5,16 @@
  */
 package hu.unideb.inf.model;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXMasonryPane;
-import com.jfoenix.controls.JFXScrollPane;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
@@ -39,7 +31,6 @@ public class SideMenuButton extends Button{
     JFXMasonryPane menuMasonPane;
     
     VBox vBox;
-    ImageView icon1;
     
     public SideMenuButton(String imagepath, String lowertext,VBox vb,boolean fromNet) {
         this.fromNet = fromNet;
@@ -79,28 +70,30 @@ public class SideMenuButton extends Button{
         image.setFitWidth(120);
         
         Label label = new Label(this.buttonName);
-        label.setAlignment(Pos.CENTER);
+        label.setTextAlignment(TextAlignment.CENTER);
         label.setWrapText(true);
+        label.setPadding(new Insets(10));
+        label.setAlignment(Pos.CENTER);
         //make the button grow if you want the right icon to always be on the right of the button :
         //label.setMaxWidth(Long.MAX_VALUE);
         //VBox.setVgrow(label, Priority.ALWAYS);
         vbx.getChildren().addAll(image,label);
         
         vbx.setSpacing(10);
-        vbx.setAlignment(Pos.CENTER);
+//        vbx.setAlignment(Pos.CENTER);
         vbx.setPadding(new Insets(10, 0, 10, 0));
         
         this.setGraphic(vbx);
+        this.setWrapText(true);
         this.getStylesheets().clear();
         this.getStylesheets().add("/styles/style-normal.css");
         this.getStyleClass().clear();
         this.getStyleClass().add("side-menu-btn");
-        this.setPrefSize(50, 50);
         //group.getChildren().add(this);
         
         DAO d  = new JPA();
         
-        this.setOnAction((t) -> {
+        this.setOnAction((ActionEvent t) -> {
             
             List<FoodButton> lst = new ArrayList<>();
             lst = d.listFoodButtonsFor(this);

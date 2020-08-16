@@ -8,7 +8,6 @@ package hu.unideb.inf.view;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXMasonryPane;
-import com.jfoenix.controls.JFXScrollPane;
 import hu.unideb.inf.effects.FlashTransition;
 import hu.unideb.inf.model.CartItemView;
 import hu.unideb.inf.model.DAO;
@@ -17,25 +16,16 @@ import hu.unideb.inf.model.FoodItem;
 import hu.unideb.inf.model.JPA;
 import hu.unideb.inf.model.OrderDetails;
 import hu.unideb.inf.model.SideMenuButton;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,18 +47,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.formula.functions.Column;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class FXMLSceneController implements Initializable {
 
@@ -330,7 +313,11 @@ public class FXMLSceneController implements Initializable {
         Effect previousEffect = rootPane.getEffect();
         final BoxBlur blur = new BoxBlur(0, 0, 5);
         blur.setInput(previousEffect);
-        rootPane.setEffect(blur);
+        
+        //Blend bm = new Blend(BlendMode.SRC_OVER, d.getEffect(), blur);
+        //rootPane.setEffect(bm);
+        
+        d.setTransitionType(JFXDialog.DialogTransition.NONE);
         
         d.setOnDialogClosed((t) -> {
              rootPane.setEffect(previousEffect);
@@ -371,11 +358,12 @@ public class FXMLSceneController implements Initializable {
 //        stage.show();
     }
 
-    private Stage createCancelDialog(Window owner) {
-        Stage stage = new Stage();
-        stage.initOwner(owner);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initStyle(StageStyle.TRANSPARENT);
+    private void createCancelDialog() {
+        JFXDialog d = new JFXDialog();
+//        Stage stage = new Stage();
+//        stage.initOwner(owner);
+//        stage.initModality(Modality.WINDOW_MODAL);
+//        stage.initStyle(StageStyle.TRANSPARENT);
 
         JFXButton cancel = new JFXButton("Cancel");
         JFXButton confirm = new JFXButton("Confirm");
@@ -387,51 +375,62 @@ public class FXMLSceneController implements Initializable {
 
         confirm.setOnAction(evt -> {
             cancelOrder();
-            stage.hide();
+//            stage.hide();
+            d.close();
             doFadeIn(upperStack, firstPage);
         });
         cancel.setOnAction(evt -> {
-            stage.hide();
+            d.close();
+//            stage.hide();
         });
 
         HBox topHbox = new HBox(20, cancel, confirm);
         topHbox.setAlignment(Pos.CENTER);
 
         VBox dialogRootVbox = new VBox(20, headerText, topHbox);
-
+        
         dialogRootVbox.setAlignment(Pos.CENTER);
         dialogRootVbox.getStylesheets().clear();
         dialogRootVbox.getStylesheets().add("/styles/style-normal.css");
         dialogRootVbox.getStyleClass().clear();
         dialogRootVbox.getStyleClass().add("dialog-root");
-        final Scene scene = new Scene(dialogRootVbox, 550, 400);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        return stage;
+        dialogRootVbox.setPrefSize(550, 400);
+        
+        d.setContent(dialogRootVbox);
+        d.setDialogContainer(upperStack);
+        d.setTransitionType(JFXDialog.DialogTransition.NONE);
+        d.show();
+//        final Scene scene = new Scene(dialogRootVbox, 550, 400);
+//        scene.setFill(Color.TRANSPARENT);
+//        stage.setScene(scene);
+//        return stage;
     }
 
     @FXML
     void cancelOrderButton() {
-        Parent rootPane = topAncPane.getScene().getRoot();
-        Effect previousEffect = rootPane.getEffect();
-        final BoxBlur blur = new BoxBlur(0, 0, 5);
-        blur.setInput(previousEffect);
-        rootPane.setEffect(blur);
-
-        Stage stage = createCancelDialog(topAncPane.getScene().getWindow());
-        rootPane.setOnMouseClicked((MouseEvent t1) -> {
-            stage.hide();
-        });
-        stage.setOnHidden(e -> rootPane.setEffect(previousEffect));
-
-        stage.getScene().getRoot().setOpacity(1);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300),
-                new KeyValue(blur.widthProperty(), 10),
-                new KeyValue(blur.heightProperty(), 10),
-                new KeyValue(stage.getScene().getRoot().opacityProperty(), 1)
-        ));
-        timeline.play();
-        stage.show();
+        
+        createCancelDialog();
+        
+//        Parent rootPane = topAncPane.getScene().getRoot();
+//        Effect previousEffect = rootPane.getEffect();
+//        final BoxBlur blur = new BoxBlur(0, 0, 5);
+//        blur.setInput(previousEffect);
+//        rootPane.setEffect(blur);
+//
+//        Stage stage = createCancelDialog(topAncPane.getScene().getWindow());
+//        rootPane.setOnMouseClicked((MouseEvent t1) -> {
+//            stage.hide();
+//        });
+//        stage.setOnHidden(e -> rootPane.setEffect(previousEffect));
+//
+//        stage.getScene().getRoot().setOpacity(1);
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(300),
+//                new KeyValue(blur.widthProperty(), 10),
+//                new KeyValue(blur.heightProperty(), 10),
+//                new KeyValue(stage.getScene().getRoot().opacityProperty(), 1)
+//        ));
+//        timeline.play();
+//        stage.show();
     }
 
     /**
@@ -442,17 +441,6 @@ public class FXMLSceneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
-//        JFXScrollPane sp =  new JFXScrollPane();
-//        //masonPane.getChildren().add(sp);
-//      
-//        StackPane s = new StackPane(menuMasonPane);
-//        
-//        sp.setContent(s);
-//       
-//        JFXScrollPane.smoothScrolling((ScrollPane) sp.getChildren().get(0));
-//        
-        
         thisController = this;
         showStack(upperStack, firstPage);
         showStack(menuStack, masonPane);
